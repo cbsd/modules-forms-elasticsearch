@@ -35,17 +35,17 @@ FORM_PATH="${workdir}/formfile"
 
 ${SQLITE3_CMD} ${FORM_PATH}/${HELPER}.sqlite << EOF
 BEGIN TRANSACTION;
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( "forms", 1,1,"-Globals","Globals",'Globals','PP','',1, "maxlen=60", "delimer", "", "" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( "forms", 1,2,"elasticsearch_ver","Elasticsearch version",'2','7','',1, "maxlen=5", "inputbox", "", "" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( "forms", 1,3,"java_package","java_package",'openjdk11-jre','openjdk11-jre','',1, "maxlen=42", "inputbox", "", "" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( "forms", 1,200,"-Instance","Instance",'Instance','-','',1, "maxlen=60", "delimer", "", "instancegroup" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( "forms", 1,201,"instance","add instance",'201','','',0, "maxlen=60", "group_add", "", "instancegroup" );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( 'forms', 1,1,'-Globals','Globals','Globals','PP','',1, 'maxlen=60', 'delimer', '', '' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( 'forms', 1,2,'elasticsearch_ver','Elasticsearch version','2','7','',1, 'maxlen=5', 'inputbox', '', '' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( 'forms', 1,3,'java_package','java_package','openjdk11-jre','openjdk11-jre','',1, 'maxlen=42', 'inputbox', '', '' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( 'forms', 1,200,'-Instance','Instance','Instance','-','',1, 'maxlen=60', 'delimer', '', 'instancegroup' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,type,link,groupname ) VALUES ( 'forms', 1,201,'instance','add instance','201','','',0, 'maxlen=60', 'group_add', '', 'instancegroup' );
 COMMIT;
 EOF
 
 ${SQLITE3_CMD} ${FORM_PATH}/${HELPER}.sqlite << EOF
 BEGIN TRANSACTION;
-INSERT INTO system ( helpername, version, packages, have_restart ) VALUES ( "elasticsearch", "201607", "textproc/elasticsearch7", "" );
+INSERT INTO system ( helpername, version, packages, have_restart ) VALUES ( 'elasticsearch', '201607', 'textproc/elasticsearch7', '' );
 COMMIT;
 EOF
 

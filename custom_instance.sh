@@ -40,17 +40,17 @@ add()
 
 		${SQLITE3_CMD} ${formfile} <<EOF
 BEGIN TRANSACTION;
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_name${index}","instance name, e.g: mytest",'test${index}','test${index}','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_http_bind_host${index}","instance http bind host, e.g: 0.0.0.0",'0.0.0.0','0.0.0.0','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_http_port${index}","instance http port, e.g: 9200",'9200','9200','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_name${index}','instance name, e.g: mytest','test${index}','test${index}','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_http_bind_host${index}','instance http bind host, e.g: 0.0.0.0','0.0.0.0','0.0.0.0','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_http_port${index}','instance http port, e.g: 9200','9200','9200','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
 COMMIT;
 EOF
 	else
 		/bin/cat <<EOF
 BEGIN TRANSACTION;
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_name${index}","instance name, e.g: mytest",'test${index}','test${index}','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_http_bind_host${index}","instance http bind host, e.g: 0.0.0.0",'0.0.0.0','0.0.0.0','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
-INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( "forms", ${index},${order_id},"instance_http_port${index}","instance http port, e.g: 9200",'9200','9200','',1, "maxlen=60", "dynamic", "inputbox", "", "${groupname}" );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_name${index}','instance name, e.g: mytest','test${index}','test${index}','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_http_bind_host${index}','instance http bind host, e.g: 0.0.0.0','0.0.0.0','0.0.0.0','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
+INSERT INTO forms ( mytable,group_id,order_id,param,desc,def,cur,new,mandatory,attr,xattr,type,link,groupname ) VALUES ( 'forms', ${index},${order_id},'instance_http_port${index}','instance http port, e.g: 9200','9200','9200','',1, 'maxlen=60', 'dynamic', 'inputbox', '', '${groupname}' );
 COMMIT;
 EOF
 	fi
@@ -63,13 +63,13 @@ del()
 	if [ -r "${formfile}" ]; then
 		${SQLITE3_CMD} ${formfile} <<EOF
 BEGIN TRANSACTION;
-DELETE FROM forms WHERE group_id = "${index}" AND groupname = "${groupname}";
+DELETE FROM forms WHERE group_id = '${index}' AND groupname = '${groupname}';
 COMMIT;
 EOF
 	else
 		/bin/cat <<EOF
 BEGIN TRANSACTION;
-DELETE FROM forms WHERE group_id = "${index}" AND groupname = "${groupname}";
+DELETE FROM forms WHERE group_id = '${index}' AND groupname = '${groupname}';
 COMMIT;
 EOF
 	fi
@@ -86,7 +86,7 @@ get_index()
 	local new_index
 
 	[ ! -r "${formfile}" ] && err 1 "formfile not readable: ${formfile}"
-	new_index=$( ${SQLITE3_CMD} ${formfile} "SELECT group_id FROM forms WHERE groupname = \"${groupname}\" ORDER BY group_id DESC LIMIT 1" )
+	new_index=$( ${SQLITE3_CMD} ${formfile} 'SELECT group_id FROM forms WHERE groupname = '${groupname}' ORDER BY group_id DESC LIMIT 1' )
 
 	case "${action}" in
 		add|create)
@@ -115,8 +115,6 @@ done
 [ -z "${index}" -a -n "${formfile}" ] && get_index
 [ -z "${index}" -a -z "${formfile}" ] && index=1
 [ -z "${order_id}" -a -z "${formfile}" ] && order_id=1
-
-#echo "Index: $index, Action: $action, Groupname: $groupname"
 
 case "${action}" in
 	add|create)
